@@ -1,10 +1,10 @@
-package guru.springframework.sfgpetclinic;
+package guru.springframework.petclinicdata;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SfgPetClinicApplicationTests {
+class PetClinicDataApplicationTests {
 
     @Test
     void contextLoads() {
