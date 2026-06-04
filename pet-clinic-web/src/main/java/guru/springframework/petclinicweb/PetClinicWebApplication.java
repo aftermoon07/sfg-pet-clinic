@@ -1,0 +1,20 @@
+package guru.springframework.petclinicweb;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class PetClinicWebApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(PetClinicWebApplication.class, args);
+    }
+
+    @SpringBootApplication
+    public static class SfgPetClinicApplication {
+
+        public static void main(String[] args) {
+            SpringApplication.run(SfgPetClinicApplication.class, args);
+        }
+
+    }
+}
