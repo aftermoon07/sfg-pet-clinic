@@ -34,7 +34,7 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("Loaded Owners....");
 
         Vet vet1 = new Vet();
-        vet1.setFirstName("Sam");
+        vet1.setFirstName("Sam"); 
         vet1.setLastName("Axe");
         vetService.save(vet1); // 👈 Will now save directly to the wired-up service bean!
 
