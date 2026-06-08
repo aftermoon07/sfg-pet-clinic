@@ -17,10 +17,9 @@ public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetS
     public Pet findById(Long id) {
         return super.findById(id); // Handles basic memory lookup assignments
     }
-
     @Override
     public Pet save(Pet object) {
-        return super.save(object.getId(), object); // Links the entity primary key to storage map layers
+        return super.save(object); // 👈 Clean
     }
 
     @Override

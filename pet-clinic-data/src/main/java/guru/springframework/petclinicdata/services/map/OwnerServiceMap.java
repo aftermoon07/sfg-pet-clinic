@@ -20,8 +20,7 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
     @Override
     public Owner save(Owner object) {
-        // Automatically manages the entity primary key tracking
-        return super.save(object.getId(), object);
+        return super.save(object); // 👈 Clean: No more manual ID extraction passed here!
     }
 
     @Override
