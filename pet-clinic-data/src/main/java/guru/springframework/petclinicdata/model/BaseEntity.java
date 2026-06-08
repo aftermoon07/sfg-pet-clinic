@@ -3,7 +3,8 @@ package guru.springframework.petclinicdata.model;
 import java.io.Serializable;
 
 public class BaseEntity implements Serializable {
-    private Long id;
+
+    private Long id; // 👈 Check that this matches your ID field name
 
     public Long getId() {
         return id;

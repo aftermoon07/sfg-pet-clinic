@@ -1,9 +1,11 @@
 package guru.springframework.petclinicdata.model;
 
 public class Person extends BaseEntity {
-private String firstName;
-private String lastName;
 
+    private String firstName;
+    private String lastName;
+
+    // 🚨 CRUCIAL: Thymeleaf requires these exact public getter names!
     public String getFirstName() {
         return firstName;
     }

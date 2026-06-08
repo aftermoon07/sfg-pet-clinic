@@ -17,11 +17,12 @@ public class VetController {
 
     // 💡 TYPOS FIXED HERE: Balanced quotes and accurate mapping routes
     @RequestMapping({"/vets", "/vets/index", "/vets/index.html"})
-    public String listVets(Model model) { //
+    public String listVets(Model model) {
 
-        // Binds the data collection to the active UI model map under key string "vets"
+        // 💡 Add this line to print out the size of your vets map array directly to the console:
+        System.out.println("Vets found in database service map: " + vetService.findAll().size());
+
         model.addAttribute("vets", vetService.findAll());
-
-        return "vets/index"; // Points directly to templates/vets/index.html
+        return "vets/index";
     }
 }

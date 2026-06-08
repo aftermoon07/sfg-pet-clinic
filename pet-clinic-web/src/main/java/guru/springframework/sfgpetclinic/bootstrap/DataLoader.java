@@ -1,11 +1,9 @@
 package guru.springframework.sfgpetclinic.bootstrap;
 
-// 1. 🔍 FIX THESE IMPORTS TO MATCH YOUR DATA MODULE PACKAGES EXACTLY
 import guru.springframework.petclinicdata.model.Owner;
 import guru.springframework.petclinicdata.model.Vet;
-import guru.springframework.petclinicdata.services.OwnerService; // 👈 Point here
-import guru.springframework.petclinicdata.services.VetService;   // 👈 Point here
-
+import guru.springframework.petclinicdata.services.OwnerService;
+import guru.springframework.petclinicdata.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -15,11 +13,10 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
 
-    // This constructor will now wire up flawlessly without any casting errors
-    public DataLoader(OwnerService ownerService, VetService vetService, OwnerService ownerService1, VetService vetService1) {
-
-        this.ownerService = ownerService1;
-        this.vetService = vetService1;
+    // 💡 FIXED: Clean constructor mapping with exactly 2 parameters
+    public DataLoader(OwnerService ownerService, VetService vetService) {
+        this.ownerService = ownerService;
+        this.vetService = vetService;
     }
 
     @Override
@@ -27,23 +24,25 @@ public class DataLoader implements CommandLineRunner {
         Owner owner1 = new Owner();
         owner1.setFirstName("Michael");
         owner1.setLastName("Weston");
-        ownerService.save(owner1); // 👈 IDs are auto-generated here seamlessly
+        ownerService.save(owner1);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Fiona");
         owner2.setLastName("Glenanne");
-        ownerService.save(owner2); // 👈 IDs are auto-generated here seamlessly
+        ownerService.save(owner2);
 
         System.out.println("Loaded Owners....");
+
         Vet vet1 = new Vet();
         vet1.setFirstName("Sam");
         vet1.setLastName("Axe");
-        vetService.save(vet1); // 👈 Makes sure it's calling vetService, not ownerService!
+        vetService.save(vet1); // 👈 Will now save directly to the wired-up service bean!
 
         Vet vet2 = new Vet();
         vet2.setFirstName("Jesse");
         vet2.setLastName("Porter");
-        vetService.save(vet2); // 👈 Make sure this says vet2 and not vet1!
+        vetService.save(vet2);
 
         System.out.println("Loaded Vets....");
-    }}
+    }
+}
