@@ -2,35 +2,34 @@ package guru.springframework.petclinicdata.services.map;
 
 import guru.springframework.petclinicdata.model.Vet;
 import guru.springframework.petclinicdata.services.VetService;
-
+import org.springframework.stereotype.Service;
 import java.util.Set;
-@org.springframework.stereotype.Service
-// Extends the generic map wrapper and implements the generic CrudService contract
+
+@Service
 public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
 
     @Override
     public Set<Vet> findAll() {
-        return super.findAll(); // Delegates directly to the underlying abstract map engine
+        return super.findAll();
     }
 
     @Override
     public Vet findById(Long id) {
-        return super.findById(id); // Maps the lookup key cleanly
+        return super.findById(id);
     }
 
     @Override
     public Vet save(Vet object) {
-        // Links the Vet entity primary key to the abstract map storage
         return super.save(object.getId(), object);
     }
 
     @Override
     public void delete(Vet object) {
-        super.delete(object); // Safely filters out the entity instance
+        super.delete(object);
     }
 
     @Override
     public void deleteById(Long id) {
-        super.deleteById(id); // Safely clears the identifier mapping key
+        super.deleteById(id);
     }
 }

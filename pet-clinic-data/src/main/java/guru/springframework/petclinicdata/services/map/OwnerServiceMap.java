@@ -1,27 +1,26 @@
 package guru.springframework.petclinicdata.services.map;
 
 import guru.springframework.petclinicdata.model.Owner;
-
 import guru.springframework.petclinicdata.services.OwnerService;
-
+import org.springframework.stereotype.Service;
 import java.util.Set;
-@org.springframework.stereotype.Service
-// Implements CrudService directly to match the instructor's exact video layout
+
+@Service // Registers it smoothly into the Spring Context
 public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
 
     @Override
     public Set<Owner> findAll() {
-        return super.findAll(); // 👈 Fixed: Uses 'super' instead of 'this' to prevent stack loops
+        return super.findAll(); // Delegates directly to your abstract parent map engine
     }
 
     @Override
     public Owner findById(Long id) {
-        return super.findById(id); // Matches the Long data type mapping cleanly
+        return super.findById(id); // Performs standard primary key lookup
     }
 
     @Override
     public Owner save(Owner object) {
-        // 👈 Fixed: Uses lowercase 'save' and passes the entity ID to the map engine
+        // Automatically manages the entity primary key tracking
         return super.save(object.getId(), object);
     }
 
@@ -37,6 +36,6 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
     @Override
     public Owner findByLastName(String lastName) {
-        return null;
+        return null; // Required interface placeholder contract
     }
-}
+} // 👈 This single closing brace now perfectly wraps ALL your methods inside the class boundaries!

@@ -16,9 +16,10 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
 
     // This constructor will now wire up flawlessly without any casting errors
-    public DataLoader(OwnerService ownerService, VetService vetService) {
-        this.ownerService = ownerService;
-        this.vetService = vetService;
+    public DataLoader(OwnerService ownerService, VetService vetService, OwnerService ownerService1, VetService vetService1) {
+
+        this.ownerService = ownerService1;
+        this.vetService = vetService1;
     }
 
     @Override
