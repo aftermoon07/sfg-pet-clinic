@@ -1,20 +1,21 @@
 package guru.springframework.petclinicdata.services.map;
 
 import guru.springframework.petclinicdata.model.Specialty;
-import guru.springframework.petclinicdata.services.SpecialtiesService; // 💡 Matches the video typo import
+import guru.springframework.petclinicdata.services.SpecialtiesService; // Matches your interface
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-@Service // 💡 Registers it into the Spring Context
+@Service // Registers it smoothly into the Spring Context
 public class SpecialtyMapService extends AbstractMapService<Specialty, Long> implements SpecialtiesService { //
+
     @Override
     public Set<Specialty> findAll() {
         return super.findAll(); //
     }
 
     @Override
-    public Specialty findByid(Long id) {
+    public Specialty findById(Long id) { // 💡 FIXED: Strictly 'findById' with a capital 'I'
         return super.findById(id); //
     }
 
@@ -24,12 +25,12 @@ public class SpecialtyMapService extends AbstractMapService<Specialty, Long> imp
     }
 
     @Override
-    public void deleteById(Long id) {
-        super.deleteById(id);
+    public void delete(Specialty object) {
+        super.delete(object); //
     }
 
     @Override
-    public void delete(Specialty object) {
-        super.delete(object); //
+    public void deleteById(Long id) { // 💡 FIXED: Uses capital 'I' to match standard Map signatures
+        super.deleteById(id);
     }
 }

@@ -1,12 +1,20 @@
 package guru.springframework.petclinicdata.services.map;
 
+import guru.springframework.petclinicdata.model.Specialty;
 import guru.springframework.petclinicdata.model.Vet;
+import guru.springframework.petclinicdata.services.SpecialtiesService; // 💡 Using your plural interface name!
 import guru.springframework.petclinicdata.services.VetService;
 import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
 public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
+
+    private final SpecialtiesService specialtiesService; // 💡 Plural variable definition
+
+    public VetServiceMap(SpecialtiesService specialtiesService) { // 💡 Injects your plural bean
+        this.specialtiesService = specialtiesService;
+    }
 
     @Override
     public Set<Vet> findAll() {
@@ -17,10 +25,23 @@ public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetS
     public Vet findById(Long id) {
         return super.findById(id);
     }
+
     @Override
     public Vet save(Vet object) {
-        return super.save(object); // 👈 Clean
-    }
+        if (object != null) {
+            if (object.getSpecialties().size() > 0) { //
+                object.getSpecialties().forEach(specialty -> { //
+                    if (specialty.getId() == null) {
+                        Specialty savedSpecialty = specialtiesService.save(specialty); //
+                        specialty.setId(savedSpecialty.getId()); // 💡 Map the generated ID back to the original object!
+                    }
+                });
+            }
+            return super.save(object);
+        } else {
+            return null;
+        }
+    } // 💡 FIXED: Properly closed the save method block scope here.
 
     @Override
     public void delete(Vet object) {

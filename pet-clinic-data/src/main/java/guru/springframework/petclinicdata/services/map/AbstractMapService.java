@@ -1,11 +1,9 @@
 package guru.springframework.petclinicdata.services.map;
 
-import guru.springframework.petclinicdata.model.BaseEntity; // 👈 Crucial import
-import guru.springframework.petclinicdata.model.Specialty;
+import guru.springframework.petclinicdata.model.BaseEntity;
 
 import java.util.*;
 
-// 💡 Update generics: T must extend BaseEntity so we can access getId() and setId()
 public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
 
     protected Map<Long, T> map = new HashMap<>();
@@ -14,16 +12,15 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
         return new HashSet<>(map.values());
     }
 
-    public T findById(ID id) {
+    public T findById(ID id) { // 💡 FIXED: This generic method covers all entity lookups perfectly.
         return map.get(id);
     }
 
-    public abstract Specialty findByid(Long id);
+    // 💡 FIXED: Removed the hardcoded 'public abstract Specialty findById(Long id);' block completely!
 
-    // 💡 Refactored Save Method: Automatically manages ID generation
     public T save(T object) {
         if (object != null) {
-            if (object.getId() == null) { // If no ID exists, auto-generate one
+            if (object.getId() == null) {
                 object.setId(getNextId());
             }
             map.put(object.getId(), object);
@@ -41,14 +38,11 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
         map.entrySet().removeIf(entry -> entry.getValue().equals(object));
     }
 
-    // 💡 Private helper method to generate sequential IDs (1, 2, 3...)
     private Long getNextId() {
         Long nextId = null;
         try {
-            // Finds the current maximum ID in the map keyset and adds 1
             nextId = Collections.max(map.keySet()) + 1;
         } catch (NoSuchElementException e) {
-            // If the map is completely empty, start at ID 1
             nextId = 1L;
         }
         return nextId;
