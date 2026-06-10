@@ -1,6 +1,8 @@
 package guru.springframework.petclinicdata.services.map;
 
 import guru.springframework.petclinicdata.model.BaseEntity; // 👈 Crucial import
+import guru.springframework.petclinicdata.model.Specialty;
+
 import java.util.*;
 
 // 💡 Update generics: T must extend BaseEntity so we can access getId() and setId()
@@ -15,6 +17,8 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
     public T findById(ID id) {
         return map.get(id);
     }
+
+    public abstract Specialty findByid(Long id);
 
     // 💡 Refactored Save Method: Automatically manages ID generation
     public T save(T object) {
