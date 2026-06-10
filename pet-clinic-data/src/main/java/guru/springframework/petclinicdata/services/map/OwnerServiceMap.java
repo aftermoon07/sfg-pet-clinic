@@ -1,27 +1,56 @@
 package guru.springframework.petclinicdata.services.map;
 
 import guru.springframework.petclinicdata.model.Owner;
+import guru.springframework.petclinicdata.model.Pet;
 import guru.springframework.petclinicdata.services.OwnerService;
+import guru.springframework.petclinicdata.services.PetService;
+import guru.springframework.petclinicdata.services.PetTypeService;
 import org.springframework.stereotype.Service;
 import java.util.Set;
 
-@Service // Registers it smoothly into the Spring Context
+@Service
 public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
+    private final PetTypeService petTypeService;
+    private final PetService petService;
+
+    public OwnerServiceMap(PetTypeService petTypeService, PetService petService) {
+        this.petTypeService = petTypeService;
+        this.petService = petService;
+    }
 
     @Override
     public Set<Owner> findAll() {
-        return super.findAll(); // Delegates directly to your abstract parent map engine
+        return super.findAll();
     }
 
     @Override
     public Owner findById(Long id) {
-        return super.findById(id); // Performs standard primary key lookup
+        return super.findById(id);
     }
 
     @Override
     public Owner save(Owner object) {
-        return super.save(object); // 👈 Clean: No more manual ID extraction passed here!
-    }
+        if (object != null) {
+            if (object.getPets() != null) {
+                object.getPets().forEach(pet -> {
+                    if (pet.getPetType() != null) {
+                        if (pet.getPetType().getId() == null) {
+                            pet.setPetType(petTypeService.save(pet.getPetType()));
+                        }
+                    } else {
+                        throw new RuntimeException("Pet Type is Required");
+                    }
+                    if (pet.getId() == null) {
+                        Pet savedPet = petService.save(pet);
+                        pet.setId(savedPet.getId());
+                    }
+                });
+            }
+            return super.save(object);
+        } else {
+            return null;
+        }
+    } // 💡 FIXED: Stripped out the duplicate rogue closing brace to maintain single class scope boundaries
 
     @Override
     public void delete(Owner object) {
@@ -35,6 +64,6 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
     @Override
     public Owner findByLastName(String lastName) {
-        return null; // Required interface placeholder contract
+        return null;
     }
-} // 👈 This single closing brace now perfectly wraps ALL your methods inside the class boundaries!
+}
