@@ -16,8 +16,13 @@ public class OwnerController {
 
     @RequestMapping({"", "/", "/index", "index.html"})
     public String listOwners(Model model) {
-        model.addAttribute("owners", ownerService.findAll()); // 👈 Key is lowercase plural "owners"
-
+        model.addAttribute("owners", ownerService.findAll());
         return "owners/index";
+    }
+
+    // 💡 FIXED: Added explicit path mapping and aligned template string name
+    @RequestMapping("/find")
+    public String findOwners(){
+        return "notimplemented";
     }
 }
