@@ -2,7 +2,9 @@ package guru.springframework.sfgpetclinic.bootstrap;
 
 import guru.springframework.petclinicdata.model.Owner;
 import guru.springframework.petclinicdata.model.Vet;
+import guru.springframework.petclinicdata.model.petType;
 import guru.springframework.petclinicdata.services.OwnerService;
+import guru.springframework.petclinicdata.services.PetTypeService;
 import guru.springframework.petclinicdata.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -12,15 +14,27 @@ public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetTypeService petTypeService;
 
     // 💡 FIXED: Clean constructor mapping with exactly 2 parameters
-    public DataLoader(OwnerService ownerService, VetService vetService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petTypeService = petTypeService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+        petType dog=new petType();
+        dog.setName("Dog");
+        petType savedDogPetType=petTypeService.save(dog);
+
+
+        petType cat=new petType();
+        cat.setName("Cat");
+        petType savedCatPetType=petTypeService.save(cat);
+
         Owner owner1 = new Owner();
         owner1.setFirstName("Michael");
         owner1.setLastName("Weston");
