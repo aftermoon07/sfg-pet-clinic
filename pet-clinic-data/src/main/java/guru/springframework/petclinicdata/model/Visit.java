@@ -1,27 +1,21 @@
 package guru.springframework.petclinicdata.model;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
+@Entity
+@Table(name = "visits")
 public class Visit extends BaseEntity {
-    private petType petType;
-    private Owner owner;
+
+    @Column(name = "date")
     private LocalDate date;
 
-    public petType getPetType() {
-        return petType;
-    }
+    @Column(name = "description")
+    private String description;
 
-    public void setPetType(petType petType) {
-        this.petType = petType;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
+    @ManyToOne
+    @JoinColumn(name = "pet_id")
+    private Pet pet;
 
     public LocalDate getDate() {
         return date;
@@ -30,4 +24,23 @@ public class Visit extends BaseEntity {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+
+
 }
