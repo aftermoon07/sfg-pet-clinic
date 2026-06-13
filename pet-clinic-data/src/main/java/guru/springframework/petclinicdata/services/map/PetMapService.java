@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service; // 👈 Enforces Spring Component
 import java.util.Set;
 
 @Service // 👈 Registers PetServiceMap cleanly into the Spring Application Context
-public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetService {
+public class PetMapService extends AbstractMapService<Pet, Long> implements PetService {
 
     @Override
     public Set<Pet> findAll() {
