@@ -4,10 +4,12 @@ import guru.springframework.petclinicdata.model.Specialty;
 import guru.springframework.petclinicdata.model.Vet;
 import guru.springframework.petclinicdata.services.SpecialtiesService; // 💡 Using your plural interface name!
 import guru.springframework.petclinicdata.services.VetService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
+@Profile({"default", "map"})
 public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
 
     private final SpecialtiesService specialtiesService; // 💡 Plural variable definition
