@@ -1,5 +1,6 @@
 package guru.springframework.sfgpetclinic.bootstrap;
 
+import guru.springframework.petclinicdata.model.*;
 import guru.springframework.petclinicdata.services.OwnerService;
 import guru.springframework.petclinicdata.services.PetTypeService;
 import guru.springframework.petclinicdata.services.SpecialtiesService;
@@ -28,7 +29,11 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         int count = petTypeService.findAll().size();
         if (count == 0) {
+            loadData();
         }
+    }
+
+    private void loadData() {
         petType dog = new petType();
         dog.setName("Dog");
         petType savedDogPetType = petTypeService.save(dog);
@@ -41,11 +46,11 @@ public class DataLoader implements CommandLineRunner {
         Specialty savedRadiology = specialtyService.save(radiology);
 
         Specialty surgery = new Specialty();
-        radiology.setDescription("Surgery");
+        surgery.setDescription("Surgery");
         Specialty savedSurgery = specialtyService.save(surgery);
 
         Specialty dentistry = new Specialty();
-        radiology.setDescription("Dentistry");
+        dentistry.setDescription("Dentistry");
         Specialty savedDentistry = specialtyService.save(dentistry);
 
         Owner owner1 = new Owner();
@@ -92,9 +97,9 @@ public class DataLoader implements CommandLineRunner {
         vet2.setFirstName("Jesse");
         vet2.setLastName("Porter");
         vet2.getSpecialties().add(savedSurgery);
+        vet2.getSpecialties().add(savedDentistry);
         vetService.save(vet2);
 
         System.out.println("Loaded Vets....");
     }
 }
-
